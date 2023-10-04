@@ -9,38 +9,42 @@
   <body>
     {% include 'emp/navbar.html' %}
 
-    <h1 class="text-center my-3" >Add New Employee</h1>
+    <h1 class="text-center my-3" >Update Employee</h1>
 
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <div class="card body">
-                        <form action="/emp/add-emp/" method="POST"> 
+                        <form action="/emp/do-update/{{emp.id}}" method="POST"> 
                             {% csrf_token %}
+
+                            
                             <div class="mb-3">
                                 <label  style="padding: 5px;" for="name" >Employee Name</label>
-                                <input name="emp_name" id="name" type="text" class="form-control" placeholder="Enter Emp name" >
+                                <input name="emp_name" id="name" value="{{emp.name}}" type="text" class="form-control" placeholder="Enter Emp name" >
                             </div>
                             <div class="mb-3" >
                                 <label style="padding: 5px;" for="id">Employee id</label>
-                                <input name="emp_id" id="id" type="text" class="form-control" placeholder="Enter Emp id">
+                                <input name="emp_id" id="id" value="{{emp.emp_Id}}" type="text" class="form-control" placeholder="Enter Emp id">
                             </div>
                             <div class="mb-3">
-                                <label for="phone" style="padding: 5px;" >Employee Phone</label>
-                                <input name="emp_phone" id="phone" type="text" class="form-control" placeholder="Enter Emp phone">
+                                <label for="phone" style="padding: 5px;">Employee Phone</label>
+                                <input name="emp_phone" id="phone"  value="{{emp.phone}}" type="text" class="form-control" placeholder="Enter Emp phone">
                             </div>
                             <div class="mb-3">
                                 <label for="address" style="padding: 5px;" >Employee Address</label>
-                                <textarea name="emp_address" id="address" rows="5" class = "form-control"></textarea>
+                                <textarea name="emp_address" id="address"   rows="5" class = "form-control">
+                                    {{emp.address}}
+                                </textarea>
                             </div>
                             <div class="mb-3 form-check">
                                 <label for="working" >Working</label>
-                                <input name="emp_working" id="working" type="checkbox" class="form-check" >                         
+                                <input name="emp_working" id="working" {% if emp.working %} checked {% endif %} type="checkbox" class="form-check" >                         
                             </div>
                             <div class="mb-3 ">
                                 <label for="department" style="padding: 5px;" >Departments</label>
-                                <select name="emp_department" id="department" class="form-control">
+                                <select name="emp_department" id="department"  value="{{emp.department}}" class="form-control">
                                     <option value="CSE">Computer Science</option>
                                     <option value="ME">Mechanical Engineer</option>
                                     <option value="EE">Electrical Engineer</option>
@@ -48,8 +52,8 @@
                             </div>
 
                             <div class="container text-center">
-                                <button name="emp_btn" class="btn btn-primary">
-                                    Add Employee
+                                <button  name="emp_btn" class="btn btn-success">
+                                    Update Employee
                                 </button>
                             </div>
                         </form>
