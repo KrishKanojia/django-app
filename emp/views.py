@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from emp.models import Emp
+from emp.models import Emp, Testimonial
+from .forms import FeedbackForm, EmpForm
+from .models import Emp
 
 # Create your views here.
 def emp_home(request):
@@ -42,9 +44,11 @@ def add_emp(request):
         # Prepare the message
 
 
-        print("Data is coming")
+        
         return redirect("/emp/home/")
-    return render(request,"emp/add_emp.html",{})
+    form = EmpForm(request.POST)
+    # form.save()
+    return render(request,"emp/add_emp.html",{'form': form})
 
 
 def delete_emp(request,emp_id):
@@ -78,3 +82,31 @@ def do_update(request,emp_id):
 
         emp.save()
     return redirect("/emp/home/")
+
+
+
+def testimonial(request):
+    testi = Testimonial.objects.all()
+    data = {
+        "testi":testi
+    }
+    return render(request,"emp/testimonials.html",data)
+
+
+def feedback(request):
+    if request.method == "POST":
+        feedback = FeedbackForm(request.POST)
+        if feedback.is_valid():
+            # print(feedback.cleaned_data['email'])
+            # print(feedback.cleaned_data['name'])
+            # print(feedback.cleaned_data['feedback'])
+            return render(request,"emp/feedback.html",{ 'form': feedback })
+        else:
+            print("bro")
+            return render(request,"emp/feedback.html",{ 'form': feedback })
+    else:
+        print('yo')
+        form = FeedbackForm()
+        return render(request,"emp/feedback.html",{ 'form': form })
+    
+

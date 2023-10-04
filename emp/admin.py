@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Emp
+from .models import Emp,Testimonial
 
 class EmpAdmin(admin.ModelAdmin):
     list_display=('name','working','emp_Id','phone',)
@@ -9,3 +9,4 @@ class EmpAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Emp,EmpAdmin)
+admin.site.register(Testimonial)
