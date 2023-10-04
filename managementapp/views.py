@@ -2,53 +2,37 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from website.models import Student
 import datetime
-
 def home(request):
     isActive=True
-    check = None
-    if request.method == "POST":
-        check = request.POST.get("Check")
-        abc = request.POST["abc"]
-        print("is check ",check, abc)
+    if request.method=='POST':
+         check=request.POST.get("check")
+         print(check)  
+         if check is  None: isActive=False
+         else: isActive=True
 
-    date = datetime.datetime.now()
-    name="LearnCodewithDurgesh"
+
+    date=datetime.datetime.now()  
+    name="LearnCodeWithDurgesh"
     list_of_programs=[
-        "WAP a print all prime numbers between 1 to 100",
-        "WAP to print pascal triangle",
-        "WAP to check prime number",
-        "WAP to check even or odd"
-        ]
-    student ={
-        'student_name': "Rahul",
-        'school': "xyz",
-        'city': "Karachi"
-
+        'WAP to check even or odd',
+        'WAP to check prime number',
+        'WAP to print all prime numbers from 1 to 100',
+        'WAP to print pascals triangle'
+    ]
+    student={
+        'student_name':"Rahul",
+        'student_college':"ZYZ",
+        'student_city':'LUCKNOW'
     }
-
-    data = {
-        'isActive': isActive,
-       'name': name,
+    # return HttpResponse("<h1>Hello this is index page  </h1> "+str(date))
+    data={
         'date':date,
-        'list_of_programs': list_of_programs,
-        'studentdata' : student
+        'isActive':isActive,
+        'name':name,
+        'list_of_programs':list_of_programs,
+        'student_data':student
     }
-    data_value ={}
-    if check is not None:
-        isActive = True
-        new_std = Student(name=student['student_name'],college=student['school'],age=20,is_active=isActive)
-        new_std.save()
-        data_value = {
-            "data" : new_std
-        }
-    
-    else: isActive = False
-    print("IsActive : ",isActive)
-    print("Method is :{}".format(request.method))
-    
-    # return HttpResponse("<h1>Hello World</h1>" + str(time))
-    return render(request,"home.html",data_value)
-
+    return render(request,"home.html",data)
 
 def about(request):
     # return HttpResponse("<h1>About Page</h1>")
